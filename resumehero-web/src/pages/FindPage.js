@@ -1,0 +1,24 @@
+import React from "react";
+import DocumentTitle from "react-document-title";
+
+export default class FindJobsPage extends React.Component {
+    render() {
+        return (
+            <DocumentTitle title="Find Jobs">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <h3>Find Jobs</h3>
+                            <hr />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs-12">
+                            Find jobs...
+                        </div>
+                    </div>
+                </div>
+            </DocumentTitle>
+        );
+    }
+}
