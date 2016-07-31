@@ -30,6 +30,7 @@ app.use(stormpath.init(app, {
 }));
 
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+
     function writeError(message) {
         res.status(400);
         res.json({message: message, status: 400});
@@ -40,13 +41,21 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
         req.user.givenName = req.body.givenName;
         req.user.surname = req.body.surname;
         req.user.email = req.body.email;
+        req.user.customData.resume = req.body.resume;
+        req.user.customData.coverletter = req.body.coverletter;
 
         req.user.save(function (err) {
             if (err) {
                 return writeError(err.userMessage || err.message);
             }
-            res.end();
+            req.user.customData.save(function (err) {
+                if (err) {
+                    return writeError(err.userMessage || err.message);
+                }
+                res.end();
+            });
         });
+
     }
 
     if (req.body.password) {

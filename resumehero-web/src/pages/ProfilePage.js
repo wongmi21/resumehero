@@ -3,13 +3,27 @@ import DocumentTitle from "react-document-title";
 import {UserProfileForm} from "react-stormpath";
 
 export default class ProfilePage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {resume: 'No Resume Selected'};
+        this.changeResume = this.changeResume.bind(this);
+    }
+
+    changeResume(e) {
+        var str = e.target.value;
+        var n = str.lastIndexOf('\\');
+        var result = str.substring(n + 1);
+        this.setState({resume: result});
+    }
+
     render() {
         return (
             <DocumentTitle title="Update Profile">
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-12">
-                            <h3>My Profile</h3>
+                            <h3>Update Profile</h3>
                             <hr />
                         </div>
                     </div>
@@ -26,6 +40,8 @@ export default class ProfilePage extends React.Component {
                                                     <div className="col-xs-12 col-sm-4">
                                                         <input className="form-control" id="givenName" name="givenName"
                                                                required="true"/>
+                                                        <input className="form-control" id="surname" name="surname"
+                                                               style={{display: 'none'}}/>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
@@ -36,22 +52,25 @@ export default class ProfilePage extends React.Component {
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="password"
-                                                           className="col-xs-12 col-sm-4 control-label">New
-                                                        Password</label>
+                                                    <label htmlFor="resume"
+                                                           className="col-xs-12 col-sm-4 control-label">Resume</label>
                                                     <div className="col-xs-12 col-sm-4">
-                                                        <input className="form-control" id="password" name="password"
-                                                               type="password" placeholder="Password" required="true"/>
+                                                        <label className="btn btn-default btn-file">
+                                                            Browse<input key="resume" id="resume" name="resume"
+                                                                         type="file" style={{display: 'none'}}
+                                                                         onChange={this.changeResume}/>
+                                                        </label>
+                                                        <span id="resume_filename"
+                                                              className="control-label pull-right">{this.state.resume}</span>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="password"
-                                                           className="col-xs-12 col-sm-4 control-label">Existing
-                                                        Password</label>
+                                                    <label htmlFor="coverletter"
+                                                           className="col-xs-12 col-sm-4 control-label">Cover
+                                                        Letter</label>
                                                     <div className="col-xs-12 col-sm-4">
-                                                        <input className="form-control" id="existingPassword"
-                                                               name="existingPassword" type="password"
-                                                               placeholder="Existing Password" required="true"/>
+                                                        <textarea className="form-control" id="coverletter"
+                                                                  name="coverletter" rows="10"/>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
@@ -61,12 +80,7 @@ export default class ProfilePage extends React.Component {
                                                         <p className="alert alert-success" spIf="form.successful">
                                                             Profile Updated.</p>
                                                         <button type="submit" className="btn btn-primary">
-                                                            <span spIf="!form.processing">
-                                                                Update
-                                                            </span>
-                                                            <span spIf="form.processing">
-                                                                Updating...
-                                                            </span>
+                                                            Update
                                                         </button>
                                                     </div>
                                                 </div>

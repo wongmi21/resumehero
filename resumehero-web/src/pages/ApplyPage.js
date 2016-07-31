@@ -14,7 +14,7 @@ export default class AppliedJobsPage extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
-                            Applied jobs...
+                            Apply to jobs...
                         </div>
                     </div>
                 </div>
