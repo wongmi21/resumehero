@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {IndexRoute, Route, browserHistory} from "react-router";
 import ReactStormpath, {Router, HomeRoute, LoginRoute, AuthenticatedRoute} from "react-stormpath";
+//noinspection ES6UnusedImports
+import { MasterPage, IndexPage, LoginPage, VerifyEmailPage, RegisterPage, ResetPasswordPage, ProfilePage } from "./pages";
 
 ReactStormpath.init();
 
