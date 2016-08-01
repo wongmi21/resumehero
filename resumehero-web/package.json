@@ -15,12 +15,14 @@
     "globals": "^9.9.0",
     "history": "^3.0.0",
     "morgan": "^1.7.0",
+    "multer": "^1.1.0",
     "react": "^15.2.1",
     "react-document-title": "^2.0.2",
     "react-dom": "^15.2.1",
     "react-dropzone": "^3.5.3",
     "react-router": "^2.6.0",
     "react-stormpath": "^1.2.2",
+    "stormpath": "^0.18.4",
     "webpack": "^1.13.1"
   },
   "devDependencies": {

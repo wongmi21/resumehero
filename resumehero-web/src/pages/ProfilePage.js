@@ -6,7 +6,9 @@ export default class ProfilePage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {resume: 'No Resume Selected'};
+        this.state = {
+            resume: 'No Resume Selected'
+        };
         this.changeResume = this.changeResume.bind(this);
     }
 
@@ -38,16 +40,14 @@ export default class ProfilePage extends React.Component {
                                                     <label htmlFor="givenName"
                                                            className="col-xs-12 col-sm-4 control-label">Name</label>
                                                     <div className="col-xs-12 col-sm-4">
-                                                        <input className="form-control" id="givenName" name="givenName"
+                                                        <input className="form-control" id="givenName" name="givenName" placeholder="Name"
                                                                required="true"/>
-                                                        <input className="form-control" id="surname" name="surname"
-                                                               style={{display: 'none'}}/>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Email</label>
                                                     <div className="col-xs-12 col-sm-4">
-                                                        <input className="form-control" id="email" name="email"
+                                                        <input className="form-control" id="email" name="email" placeholder="Email"
                                                                required="true"/>
                                                     </div>
                                                 </div>
@@ -69,7 +69,7 @@ export default class ProfilePage extends React.Component {
                                                            className="col-xs-12 col-sm-4 control-label">Cover
                                                         Letter</label>
                                                     <div className="col-xs-12 col-sm-4">
-                                                        <textarea className="form-control" id="coverletter"
+                                                        <textarea className="form-control" id="coverletter" value={this.state.coverletter}
                                                                   name="coverletter" rows="10"/>
                                                     </div>
                                                 </div>

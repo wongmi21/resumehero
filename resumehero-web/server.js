@@ -5,9 +5,11 @@ var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config');
+var multer  = require('multer');
 
 var app = express();
 var compiler = webpack(config);
+var upload = multer({ dest: 'uploads/' });
 
 app.use(morgan('combined'));
 
@@ -29,7 +31,7 @@ app.use(stormpath.init(app, {
     }
 }));
 
-app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+app.post('/me', bodyParser.json(), upload.single('resume'), stormpath.loginRequired, function (req, res) {
 
     function writeError(message) {
         res.status(400);
