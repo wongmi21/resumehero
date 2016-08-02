@@ -1,26 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {IndexRoute, Route, browserHistory} from "react-router";
-import ReactStormpath, {Router, HomeRoute, LoginRoute, AuthenticatedRoute} from "react-stormpath";
-//noinspection ES6UnusedImports
-import { MasterPage, IndexPage, LoginPage, VerifyEmailPage, RegisterPage, ResetPasswordPage, ProfilePage, FindPage, ApplyPage } from "./pages";
-
-ReactStormpath.init();
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import MasterPage from './pages/MasterPage';
+import IndexPage from './pages/IndexPage';
+import ProfilePage from './pages/ProfilePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 ReactDOM.render(
     <Router history={browserHistory}>
-        <HomeRoute path="/" component={MasterPage}>
+        <Route path='/' component={MasterPage}>
             <IndexRoute component={IndexPage}/>
-            <LoginRoute path="/login" component={LoginPage}/>
-            <Route path="/verify" component={VerifyEmailPage}/>
-            <Route path="/register" component={RegisterPage}/>
-            <Route path="/forgot" component={ResetPasswordPage}/>
-            <AuthenticatedRoute>
-                <HomeRoute path="/profile" component={ProfilePage}/>
-                <Route path="/find" component={FindPage}/>
-                <Route path="/apply" component={ApplyPage}/>
-            </AuthenticatedRoute>
-        </HomeRoute>
-    </Router>,
-    document.getElementById('app-container')
+            <Route path='/profile' component={ProfilePage}/>
+            <Route path='/login' component={LoginPage}/>
+            <Route path='/register' component={RegisterPage}/>
+        </Route>
+    </Router>
+  , document.getElementById('app-container')
 );

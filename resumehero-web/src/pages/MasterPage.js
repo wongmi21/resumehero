@@ -1,10 +1,11 @@
-import React from "react";
-import Header from "./Header";
+import React from 'react';
+import Header from './Header';
 
 export default class MasterPage extends React.Component {
+
     render() {
         return (
-            <div className='MasterPage'>
+            <div>
                 <Header />
                 { this.props.children }
             </div>

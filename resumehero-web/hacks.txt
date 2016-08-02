@@ -1,3 +1,0 @@
-in index.js of react-stormpath,
-
-1. Line 11081, add  || element.type === 'textarea'

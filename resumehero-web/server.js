@@ -1,98 +1,74 @@
-var stormpath = require('express-stormpath');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config');
-var multer  = require('multer');
+var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
 
-var app = express();
 var compiler = webpack(config);
-var upload = multer({ dest: 'uploads/' });
+var app = express();
 
-app.use(morgan('combined'));
+MongoClient.connect("mongodb://localhost:27017/resumehero", function(err, db) {
+    if(!err) {
+        console.log("Established MongoDB connection");
 
-app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-}));
+        var users = db.collection('users');
 
-app.get('/css/bootstrap.min.css', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
-});
+        app.use(require('webpack-dev-middleware')(compiler, {
+            noInfo: true,
+            publicPath: config.output.publicPath
+        }));
 
-app.use(stormpath.init(app, {
-    web: {
-        produces: ['application/json'],
-        login: {
-            nextUri: '/profile'
-        }
-    }
-}));
+        app.use(bodyParser.urlencoded({
+            extended: true
+        }));
 
-app.post('/me', bodyParser.json(), upload.single('resume'), stormpath.loginRequired, function (req, res) {
+        app.use(bodyParser.json());
 
-    function writeError(message) {
-        res.status(400);
-        res.json({message: message, status: 400});
-        res.end();
-    }
+        app.post('/register', function(req, res) {
 
-    function saveAccount() {
-        req.user.givenName = req.body.givenName;
-        req.user.surname = req.body.surname;
-        req.user.email = req.body.email;
-        req.user.customData.resume = req.body.resume;
-        req.user.customData.coverletter = req.body.coverletter;
-
-        req.user.save(function (err) {
-            if (err) {
-                return writeError(err.userMessage || err.message);
-            }
-            req.user.customData.save(function (err) {
-                if (err) {
-                    return writeError(err.userMessage || err.message);
-                }
+            function writeResponse(status, message) {
+                res.status(status);
+                res.write(message);
                 res.end();
+            }
+
+            users.findOne({email: req.body.email}, function(err, doc) {
+                if (doc != null) {
+                    return writeResponse(400, 'Account already exists!');
+                }
+                users.insertOne(req.body);
+                return writeResponse(200, 'Registration Complete.');
             });
         });
 
-    }
+        app.post('/login', function(req, res) {
 
-    if (req.body.password) {
-        var application = req.app.get('stormpathApplication');
-
-        application.authenticateAccount({
-            username: req.user.username,
-            password: req.body.existingPassword
-        }, function (err) {
-            if (err) {
-                return writeError('The existing password that you entered was incorrect.');
+            function writeResponse(status, message) {
+                res.status(status);
+                res.write(message);
+                res.end();
             }
 
-            req.user.password = req.body.password;
+            users.findOne({email: req.body.email}, function(err, doc) {
+                if (doc != null) {
+                    return writeResponse(200, 'Login Successful.');
+                }
+                return writeResponse(400, 'Login Failed!');
+            });
+        });
 
-            saveAccount();
+        app.get('*', function(req, res) {
+            res.sendFile(__dirname + '/build/index.html')
+        });
+
+        app.listen(3000, 'localhost', function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('Listening at http://localhost:3000');
         });
     } else {
-        saveAccount();
+        console.log(err);
     }
-});
-
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build/index.html'));
-});
-
-app.on('stormpath.ready', function () {
-    console.log('Stormpath Ready');
-
-    app.listen(3000, 'localhost', function (err) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        console.log('Listening at http://localhost:3000');
-    });
 });
