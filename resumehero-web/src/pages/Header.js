@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Authenticated from '../components/Authenticated';
+import NotAuthenticated from '../components/NotAuthenticated';
+import LogoutLink from '../components/LogoutLink';
 
 export default class Header extends React.Component {
 
@@ -10,11 +13,20 @@ export default class Header extends React.Component {
                     <div id="navbar-collapse" className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
                             <li><Link to="/">Home</Link></li>
-                            <li><Link to="/profile">Profile</Link></li>
+                            <Authenticated>
+                                <li><Link to="/profile">Profile</Link></li>
+                            </Authenticated>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="/login">Log In</Link></li>
-                            <li><Link to="/register">Create Account</Link></li>
+                            <Authenticated>
+                                <li><LogoutLink /></li>
+                            </Authenticated>
+                            <NotAuthenticated>
+                                <li><Link to="/login">Log In</Link></li>
+                            </NotAuthenticated>
+                            <NotAuthenticated>
+                                <li><Link to="/register">Create Account</Link></li>
+                            </NotAuthenticated>
                         </ul>
                     </div>
                 </div>

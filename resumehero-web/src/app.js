@@ -11,9 +11,9 @@ ReactDOM.render(
     <Router history={browserHistory}>
         <Route path='/' component={MasterPage}>
             <IndexRoute component={IndexPage}/>
-            <Route path='/profile' component={ProfilePage}/>
             <Route path='/login' component={LoginPage}/>
             <Route path='/register' component={RegisterPage}/>
+            <Route path='/profile' component={ProfilePage}/>
         </Route>
     </Router>
   , document.getElementById('app-container')

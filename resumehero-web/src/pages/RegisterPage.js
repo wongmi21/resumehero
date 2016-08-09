@@ -1,15 +1,19 @@
 import React from 'react';
 import $ from 'jquery';
 
-var RegisterForm = React.createClass({
-    getInitialState: function() {
-        return {
+export default class RegisterPage extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
             email: "",
             password: ""
-        }
-    },
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-    handleSubmit: function(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
         $.ajax({
@@ -26,48 +30,13 @@ var RegisterForm = React.createClass({
                 alert(xhr.responseText);
             }
         });
-    },
+    }
 
-    handleChange: function(field, e) {
+    handleChange(field, e) {
         var change = {};
         change[field] = e.target.value;
         this.setState(change);
-    },
-
-    render: function () {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="row">
-                    <div className="col-xs-12">
-                        <div className="form-horizontal">
-                            <div className="form-group">
-                                <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Email</label>
-                                <div className="col-xs-12 col-sm-4">
-                                    <input className="form-control" id="email" placeholder="Email" required="true" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password" className="col-xs-12 col-sm-4 control-label">Password</label>
-                                <div className="col-xs-12 col-sm-4">
-                                    <input className="form-control" id="password" placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="col-sm-offset-4 col-sm-4">
-                                    <button type="submit" className="btn btn-primary">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        );
     }
-});
-
-export default class RegisterPage extends React.Component {
 
     render() {
         return (
@@ -78,7 +47,33 @@ export default class RegisterPage extends React.Component {
                         <hr />
                     </div>
                 </div>
-                <RegisterForm/>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <div className="form-horizontal">
+                                <div className="form-group">
+                                    <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Email</label>
+                                    <div className="col-xs-12 col-sm-4">
+                                        <input className="form-control" id="email" placeholder="Email" required="true" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password" className="col-xs-12 col-sm-4 control-label">Password</label>
+                                    <div className="col-xs-12 col-sm-4">
+                                        <input className="form-control" id="password" placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-offset-4 col-sm-4">
+                                        <button type="submit" className="btn btn-primary">
+                                            Register
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     }
