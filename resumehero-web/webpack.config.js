@@ -16,10 +16,10 @@ module.exports = {
             include: __dirname + '/src'
         }]
     },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.js$/,
-            minimize: true
-        })
-    ]
+    // plugins: [
+    //     new webpack.optimize.UglifyJsPlugin({
+    //         include: /\.js$/,
+    //         minimize: true
+    //     })
+    // ]
 };
