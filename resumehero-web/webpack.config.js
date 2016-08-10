@@ -1,5 +1,3 @@
-/* eslint-disable no-var */
-var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -15,7 +13,13 @@ module.exports = {
         loaders: [{
             test: /\.js$/,
             loaders: ['babel'],
-            include: path.join(__dirname, 'src')
+            include: __dirname + '/src'
         }]
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            include: /\.js$/,
+            minimize: true
+        })
+    ]
 };
