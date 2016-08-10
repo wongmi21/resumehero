@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+import request from 'superagent';
 
 export default class LoginPage extends React.Component {
 
@@ -16,21 +16,18 @@ export default class LoginPage extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "/login",
-            data: {
+        request
+            .post('/login')
+            .send({
                 email: this.state.email,
                 password: this.state.password
-            },
-            success: function(data) {
-                this.context.changeUser(this.state.email);
-                alert(data);
-            }.bind(this),
-            error: function(xhr) {
-                alert(xhr.responseText);
-            }
-        });
+            })
+            .end(function (err, res) {
+                if (res.ok) {
+                    this.context.changeUser(this.state.email);
+                }
+                alert(res.text);
+            }.bind(this));
     }
 
     handleChange(field, e) {

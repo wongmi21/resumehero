@@ -25,11 +25,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
     publicPath: config.output.publicPath
 }));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.get('*', function(req, res) {
-    res.sendFile(__dirname + '/build/index.html');
-});
+app.use(bodyParser.json());
 
 app.post('/register', function(req, res) {
     var user = new User({
@@ -66,13 +62,14 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/profile', upload.single('resume'), function(req, res) {
-    User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
+    User.findOne({ email: req.body.email }, function (err, user) {
         if (err) {
             res.status(400);
             res.write(err.message);
             res.end();
         } else if (user) {
             user.name = req.body.name;
+            user.phonenumber = req.body.phonenumber;
             user.resume = req.body.resume;
             user.coverletter = req.body.coverletter;
             user.save(function(err) {
@@ -87,10 +84,37 @@ app.post('/profile', upload.single('resume'), function(req, res) {
             });
         } else {
             res.status(400);
-            res.write('Password incorrect.');
+            res.write(req.body.email + ' not found.');
             res.end();
         }
     })
+});
+
+app.get('/user', function(req, res) {
+    User.findOne({ email: req.query.email }, function (err, user) {
+        if (err) {
+            res.status(400);
+            res.write(err.message);
+            res.end();
+        } else if (user) {
+            res.json({
+                name: user.name,
+                phonenumber: user.phonenumber,
+                email: user.email,
+                resume: user.resume,
+                coverletter: user.coverletter
+            });
+            res.end();
+        } else {
+            res.status(400);
+            res.write(req.query.email + ' not found.');
+            res.end();
+        }
+    })
+});
+
+app.get('*', function(req, res) {
+    res.sendFile(__dirname + '/build/index.html');
 });
 
 app.listen(3000, 'localhost', function (err) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+import request from 'superagent';
 
 export default class RegisterPage extends React.Component {
 
@@ -16,20 +16,15 @@ export default class RegisterPage extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "/register",
-            data: {
+        request
+            .post('/register')
+            .send({
                 email: this.state.email,
                 password: this.state.password
-            },
-            success: function(data) {
-                alert(data);
-            },
-            error: function(xhr) {
-                alert(xhr.responseText);
-            }
-        });
+            })
+            .end(function (err, res) {
+                alert(res.text);
+            });
     }
 
     handleChange(field, e) {

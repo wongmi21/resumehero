@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+import request from 'superagent';
 
 export default class ProfilePage extends React.Component {
 
@@ -7,8 +7,7 @@ export default class ProfilePage extends React.Component {
         super();
         this.state = {
             name: "",
-            email: "",
-            password: "",
+            phonenumber: "",
             resume: "",
             coverletter: ""
         };
@@ -24,26 +23,40 @@ export default class ProfilePage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        request
+            .get('/user')
+            .query({
+                email: this.context.user
+            })
+            .end(function(err, res) {
+                if (res.ok) {
+                    console.log(res);
+                    this.setState({
+                        name: res.body.name,
+                        phonenumber: res.body.phonenumber,
+                        resume: res.body.resume,
+                        coverletter: res.body.coverletter
+                    });
+                }
+            }.bind(this));
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "/profile",
-            data: {
+        request
+            .post('/profile')
+            .send({
+                email: this.context.user,
                 name: this.state.name,
-                email: this.state.email,
-                password: this.state.password,
+                phonenumber: this.state.phonenumber,
                 resume: this.state.resume,
                 coverletter: this.state.coverletter
-            },
-            success: function(data) {
-                alert(data);
-            },
-            error: function(xhr) {
-                alert(xhr.responseText);
-            }
-        });
+            })
+            .end(function(err, res) {
+                alert(res.text);
+            });
     }
 
     handleChange(field, e) {
@@ -73,25 +86,17 @@ export default class ProfilePage extends React.Component {
                         <div className="col-xs-12">
                             <div className="form-horizontal">
                                 <div className="form-group">
-                                    <label htmlFor="name"
-                                           className="col-xs-12 col-sm-4 control-label">Name</label>
+                                    <label htmlFor="name" className="col-xs-12 col-sm-4 control-label">Name</label>
                                     <div className="col-xs-12 col-sm-4">
                                         <input className="form-control" id="name" name="name" placeholder="Name"
                                                value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Email</label>
+                                    <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Phone Number</label>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="email" name="email" placeholder="Email"
-                                               value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password" className="col-xs-12 col-sm-4 control-label">Password</label>
-                                    <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="password" name="password" placeholder="Password" type="password"
-                                               value={this.state.password} onChange={this.handleChange.bind(this, 'password')} required="true"/>
+                                        <input className="form-control" id="phonenumber" name="phonenumber" placeholder="Phone Number"
+                                               value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -99,12 +104,10 @@ export default class ProfilePage extends React.Component {
                                            className="col-xs-12 col-sm-4 control-label">Resume</label>
                                     <div className="col-xs-12 col-sm-4">
                                         <label className="btn btn-default btn-file">
-                                            Browse<input key="resume" id="resume" name="resume"
-                                                         type="file" style={{display: 'none'}}
-                                                         onChange={this.changeResume}/>
+                                            Browse<input key="resume" id="resume" name="resume" type="file" style={{display: 'none'}}
+                                                         onChange={this.changeResume.bind(this)}/>
                                         </label>
-                                        <span id="resume_filename"
-                                              className="control-label pull-right">{this.state.resume}</span>
+                                        <span id="resume_filename" className="control-label pull-right">{this.state.resume}</span>
                                     </div>
                                 </div>
                                 <div className="form-group">
