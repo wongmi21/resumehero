@@ -31,10 +31,10 @@ export default class ProfilePage extends React.Component {
             .end(function(err, res) {
                 if (res.ok) {
                     this.setState({
-                        name: res.body.name,
-                        phonenumber: res.body.phonenumber,
-                        resume_filename: res.body.resume_filename,
-                        coverletter: res.body.coverletter
+                        name: res.body.user.name,
+                        phonenumber: res.body.user.phonenumber,
+                        resume_filename: res.body.user.resume ? res.body.user.resume.originalname : null,
+                        coverletter: res.body.user.coverletter
                     });
                 }
             }.bind(this));

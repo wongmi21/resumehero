@@ -75,11 +75,7 @@ app.get('/user', function(req, res) {
     User.findOne({ email: req.query.email }, function (err, user) {
         if (user) {
             res.json({
-                name: user.name,
-                phonenumber: user.phonenumber,
-                email: user.email,
-                resume_filename: user.resume ? user.resume.originalname : null,
-                coverletter: user.coverletter
+                user: user
             });
         } else {
             res.status(400);
