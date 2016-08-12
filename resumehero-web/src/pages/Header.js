@@ -1,39 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Authenticated from '../components/Authenticated';
 import NotAuthenticated from '../components/NotAuthenticated';
-import LogoutLink from '../components/LogoutLink';
 
 export default class Header extends React.Component {
 
+    handleLogout() {
+        this.context.changeUser(undefined);
+    }
+
     render() {
         return (
-            <nav className="navbar navbar-default navbar-static-top">
+            <Navbar bsStyle="default">
                 <div className="container">
-                    <div id="navbar-collapse" className="collapse navbar-collapse">
-                        <ul className="nav navbar-nav">
-                            <li><Link to="/">Home</Link></li>
-                            <Authenticated>
-                                <li><Link to="/profile">Profile</Link></li>
-                            </Authenticated>
-                            <Authenticated>
-                                <li><Link to="/jobs">Jobs</Link></li>
-                            </Authenticated>
-                        </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <Authenticated>
-                                <li><LogoutLink /></li>
-                            </Authenticated>
-                            <NotAuthenticated>
-                                <li><Link to="/login">Log In</Link></li>
-                            </NotAuthenticated>
-                            <NotAuthenticated>
-                                <li><Link to="/register">Create Account</Link></li>
-                            </NotAuthenticated>
-                        </ul>
-                    </div>
+                    <Nav>
+                        <IndexLinkContainer to="/"><NavItem>Home</NavItem></IndexLinkContainer>
+                        <Authenticated>
+                            <LinkContainer to="/profile"><NavItem>Profile</NavItem></LinkContainer>
+                        </Authenticated>
+                        <Authenticated>
+                            <LinkContainer to="/jobs"><NavItem>Jobs</NavItem></LinkContainer>
+                        </Authenticated>
+                    </Nav>
+                    <Nav pullRight>
+                        <Authenticated>
+                            <IndexLinkContainer to="/"><NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem></IndexLinkContainer>
+                        </Authenticated>
+                        <NotAuthenticated>
+                            <LinkContainer to="/login"><NavItem>Log In</NavItem></LinkContainer>
+                        </NotAuthenticated>
+                        <NotAuthenticated>
+                            <LinkContainer to="/register"><NavItem>Create Account</NavItem></LinkContainer>
+                        </NotAuthenticated>
+                    </Nav>
                 </div>
-            </nav>
+            </Navbar>
         );
     }
 }
+
+Header.contextTypes = {
+    changeUser: React.PropTypes.func
+};

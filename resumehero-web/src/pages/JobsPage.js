@@ -16,14 +16,7 @@ export default class JobsPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-12">
-                        <h3>Log In</h3>
-                        <hr />
-                    </div>
-                </div>
-            </div>
+            null
         );
     }
 }
