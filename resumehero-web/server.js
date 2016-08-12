@@ -72,7 +72,7 @@ app.post('/profile', upload.any(), function(req, res) {
 });
 
 app.get('/user', function(req, res) {
-    User.findOne({ email: req.query.email }, function (err, user) {
+    User.findOne({ email: req.query.email, password: req.query.password }, function (err, user) {
         if (user) {
             res.json({
                 user: user

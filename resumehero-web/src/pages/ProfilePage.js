@@ -26,7 +26,8 @@ export default class ProfilePage extends React.Component {
         request
             .get('/user')
             .query({
-                email: this.context.user.email
+                email: this.context.user.email,
+                password: this.context.user.password
             })
             .end(function(err, res) {
                 if (res.ok) {
