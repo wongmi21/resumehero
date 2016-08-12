@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
     password: {type: String, required: true},
     name: String,
     phonenumber: String,
-    resume: String,
+    resume: {},
     coverletter: String
 });
 
@@ -61,7 +61,7 @@ app.post('/login', function(req, res) {
     })
 });
 
-app.post('/profile', upload.single('resume'), function(req, res) {
+app.post('/profile', upload.any(), function(req, res) {
     User.findOne({ email: req.body.email }, function (err, user) {
         if (err) {
             res.status(400);
@@ -70,7 +70,7 @@ app.post('/profile', upload.single('resume'), function(req, res) {
         } else if (user) {
             user.name = req.body.name;
             user.phonenumber = req.body.phonenumber;
-            user.resume = req.body.resume;
+            user.resume = req.files[0];
             user.coverletter = req.body.coverletter;
             user.save(function(err) {
                 if (err) {
@@ -87,7 +87,7 @@ app.post('/profile', upload.single('resume'), function(req, res) {
             res.write(req.body.email + ' not found.');
             res.end();
         }
-    })
+    });
 });
 
 app.get('/user', function(req, res) {
@@ -101,7 +101,7 @@ app.get('/user', function(req, res) {
                 name: user.name,
                 phonenumber: user.phonenumber,
                 email: user.email,
-                resume: user.resume,
+                resume_filename: user.resume.originalname,
                 coverletter: user.coverletter
             });
             res.end();
@@ -110,7 +110,7 @@ app.get('/user', function(req, res) {
             res.write(req.query.email + ' not found.');
             res.end();
         }
-    })
+    });
 });
 
 app.get('*', function(req, res) {

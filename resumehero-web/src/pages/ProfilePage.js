@@ -8,7 +8,8 @@ export default class ProfilePage extends React.Component {
         this.state = {
             name: "",
             phonenumber: "",
-            resume: "",
+            resume: {},
+            resume_filename: "",
             coverletter: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,9 +18,7 @@ export default class ProfilePage extends React.Component {
 
     componentWillMount() {
         if(this.context.user === undefined) {
-            this.render = function () {
-                return;
-            }
+            this.render = function () {}
         }
     }
 
@@ -31,11 +30,10 @@ export default class ProfilePage extends React.Component {
             })
             .end(function(err, res) {
                 if (res.ok) {
-                    console.log(res);
                     this.setState({
                         name: res.body.name,
                         phonenumber: res.body.phonenumber,
-                        resume: res.body.resume,
+                        resume_filename: res.body.resume_filename,
                         coverletter: res.body.coverletter
                     });
                 }
@@ -45,15 +43,16 @@ export default class ProfilePage extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
+        var fd = new FormData();
+        fd.append('email', this.context.user);
+        fd.append('name', this.state.name);
+        fd.append('resume', this.state.resume);
+        fd.append('phonenumber', this.state.phonenumber);
+        fd.append('coverletter', this.state.coverletter);
+
         request
             .post('/profile')
-            .send({
-                email: this.context.user,
-                name: this.state.name,
-                phonenumber: this.state.phonenumber,
-                resume: this.state.resume,
-                coverletter: this.state.coverletter
-            })
+            .send(fd)
             .end(function(err, res) {
                 alert(res.text);
             });
@@ -69,7 +68,10 @@ export default class ProfilePage extends React.Component {
         var str = e.target.value;
         var n = str.lastIndexOf('\\');
         var result = str.substring(n + 1);
-        this.setState({resume: result});
+        this.setState({resume_filename: result});
+
+        var files = e.target.files;
+        this.setState({resume: files[0]});
     }
 
     render() {
@@ -104,10 +106,9 @@ export default class ProfilePage extends React.Component {
                                            className="col-xs-12 col-sm-4 control-label">Resume</label>
                                     <div className="col-xs-12 col-sm-4">
                                         <label className="btn btn-default btn-file">
-                                            Browse<input key="resume" id="resume" name="resume" type="file" style={{display: 'none'}}
-                                                         onChange={this.changeResume.bind(this)}/>
+                                            Browse<input type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
                                         </label>
-                                        <span id="resume_filename" className="control-label pull-right">{this.state.resume}</span>
+                                        <span id="resume_filename" className="control-label pull-right">{this.state.resume_filename}</span>
                                     </div>
                                 </div>
                                 <div className="form-group">

@@ -4,6 +4,7 @@ module.exports = {
     entry: [
         './src/app'
     ],
+    devtool: 'eval-source-map',
     output: {
         path: __dirname,
         filename: 'app.js',
@@ -17,9 +18,15 @@ module.exports = {
         }]
     },
     // plugins: [
+    //     new webpack.DefinePlugin({
+    //         'process.env':{
+    //             'NODE_ENV': JSON.stringify('production')
+    //         }
+    //     }),
     //     new webpack.optimize.UglifyJsPlugin({
-    //         include: /\.js$/,
-    //         minimize: true
+    //         compress:{
+    //             warnings: true
+    //         }
     //     })
     // ]
 };
