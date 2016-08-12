@@ -24,9 +24,11 @@ export default class LoginPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    this.context.changeUser(this.state.email);
+                    this.context.changeUser(res.body);
+                    alert('Login complete');
+                } else {
+                    alert('Login failed');
                 }
-                alert(res.text);
             }.bind(this));
     }
 
@@ -78,5 +80,5 @@ export default class LoginPage extends React.Component {
 }
 
 LoginPage.contextTypes = {
-    changeUser: React.PropTypes.any
+    changeUser: React.PropTypes.func
 };

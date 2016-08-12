@@ -26,7 +26,7 @@ export default class ProfilePage extends React.Component {
         request
             .get('/user')
             .query({
-                email: this.context.user
+                email: this.context.user.email
             })
             .end(function(err, res) {
                 if (res.ok) {
@@ -44,7 +44,7 @@ export default class ProfilePage extends React.Component {
         e.preventDefault();
 
         var fd = new FormData();
-        fd.append('email', this.context.user);
+        fd.append('email', this.context.user.email);
         fd.append('name', this.state.name);
         fd.append('resume', this.state.resume);
         fd.append('phonenumber', this.state.phonenumber);
@@ -54,7 +54,11 @@ export default class ProfilePage extends React.Component {
             .post('/profile')
             .send(fd)
             .end(function(err, res) {
-                alert(res.text);
+                if (res.ok) {
+                    alert('Profile updated');
+                } else {
+                    alert('Update profile failed');
+                }
             });
     }
 
@@ -137,5 +141,5 @@ export default class ProfilePage extends React.Component {
 }
 
 ProfilePage.contextTypes = {
-    user: React.PropTypes.any
+    user: React.PropTypes.object
 };

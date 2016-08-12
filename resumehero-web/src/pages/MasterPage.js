@@ -32,6 +32,6 @@ export default class MasterPage extends React.Component {
 }
 
 MasterPage.childContextTypes = {
-    user: React.PropTypes.any,
-    changeUser: React.PropTypes.any
+    user: React.PropTypes.object,
+    changeUser: React.PropTypes.func
 };

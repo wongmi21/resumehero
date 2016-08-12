@@ -23,7 +23,11 @@ export default class RegisterPage extends React.Component {
                 password: this.state.password
             })
             .end(function (err, res) {
-                alert(res.text);
+                if (res.ok) {
+                    alert('Registration complete');
+                } else {
+                    alert('Registration failed');
+                }
             });
     }
 

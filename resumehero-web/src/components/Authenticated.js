@@ -11,5 +11,5 @@ export default class Authenticated extends React.Component {
 }
 
 Authenticated.contextTypes = {
-    user: React.PropTypes.any
+    user: React.PropTypes.object
 };

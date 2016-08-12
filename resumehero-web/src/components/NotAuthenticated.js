@@ -11,5 +11,5 @@ export default class NotAuthenticated extends React.Component {
 }
 
 NotAuthenticated.contextTypes = {
-    user: React.PropTypes.any
+    user: React.PropTypes.object
 };
