@@ -13,5 +13,5 @@ export default class LogoutLink extends React.Component {
 }
 
 LogoutLink.contextTypes = {
-    changeUser: React.PropTypes.any
+    changeUser: React.PropTypes.func
 };

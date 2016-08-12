@@ -6,8 +6,9 @@ export default class MasterPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            user: undefined
-        }
+            user: JSON.parse(localStorage.getItem('user')) || undefined
+        };
+        console.log(this.state);
     }
 
     getChildContext() {
@@ -19,6 +20,11 @@ export default class MasterPage extends React.Component {
 
     changeUser(user) {
         this.setState({user: user});
+        if (user === undefined) {
+            localStorage.clear();
+        } else {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
     }
 
     render() {

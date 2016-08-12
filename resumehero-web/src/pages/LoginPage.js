@@ -13,6 +13,12 @@ export default class LoginPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentWillMount() {
+        if(this.context.user !== undefined) {
+            this.render = function () {}
+        }
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
