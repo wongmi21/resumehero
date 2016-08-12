@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import MasterPage from './pages/MasterPage';
 import IndexPage from './pages/IndexPage';
-import ProfilePage from './pages/ProfilePage';
-import JobsPage from './pages/JobsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import JobsPage from './pages/JobsPage';
+
+function logout(nextState, replace) {
+    replace('/');
+}
 
 ReactDOM.render(
     <Router history={browserHistory}>
@@ -16,6 +20,7 @@ ReactDOM.render(
             <Route path='/register' component={RegisterPage}/>
             <Route path='/profile' component={ProfilePage}/>
             <Route path='/jobs' component={JobsPage}/>
+            <Route path='/logout' onEnter={logout}/>
         </Route>
     </Router>
   , document.getElementById('app-container')

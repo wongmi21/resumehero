@@ -25,7 +25,7 @@ export default class Header extends React.Component {
                     </Nav>
                     <Nav pullRight>
                         <Authenticated>
-                            <IndexLinkContainer to="/"><NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem></IndexLinkContainer>
+                            <IndexLinkContainer to="/logout"><NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem></IndexLinkContainer>
                         </Authenticated>
                         <NotAuthenticated>
                             <LinkContainer to="/login"><NavItem>Log In</NavItem></LinkContainer>
