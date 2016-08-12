@@ -15,7 +15,9 @@ export default class LoginPage extends React.Component {
 
     componentWillMount() {
         if(this.context.user !== undefined) {
-            this.render = function () {}
+            this.render = function () {
+                return null;
+            }
         }
     }
 
@@ -86,5 +88,6 @@ export default class LoginPage extends React.Component {
 }
 
 LoginPage.contextTypes = {
+    user: React.PropTypes.object,
     changeUser: React.PropTypes.func
 };

@@ -9,8 +9,7 @@ export default class IndexPage extends React.Component {
                 <hr />
                 <div className="jumbotron">
                     <p>
-                        <strong>We help job applicants apply to hundreds of jobs in just a few mouse
-                            clicks.</strong>
+                        <strong>We help job applicants apply to hundreds of jobs in just a few mouse clicks.</strong>
                     </p>
                     <p>Here are the list of job boards currently supported.</p>
                     <ul className="lead">

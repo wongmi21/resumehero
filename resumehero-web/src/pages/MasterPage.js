@@ -8,7 +8,6 @@ export default class MasterPage extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem('user')) || undefined
         };
-        console.log(this.state);
     }
 
     getChildContext() {

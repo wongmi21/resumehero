@@ -15,7 +15,9 @@ export default class RegisterPage extends React.Component {
 
     componentWillMount() {
         if(this.context.user !== undefined) {
-            this.render = function () {}
+            this.render = function () {
+                return null;
+            }
         }
     }
 
@@ -83,3 +85,7 @@ export default class RegisterPage extends React.Component {
         );
     }
 }
+
+RegisterPage.contextTypes = {
+    user: React.PropTypes.object
+};

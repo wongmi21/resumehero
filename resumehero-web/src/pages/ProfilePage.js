@@ -18,7 +18,12 @@ export default class ProfilePage extends React.Component {
 
     componentWillMount() {
         if(this.context.user === undefined) {
-            this.render = function () {}
+            this.componentDidMount = function () {
+                return null;
+            };
+            this.render = function () {
+                return null;
+            };
         }
     }
 

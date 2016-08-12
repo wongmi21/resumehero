@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import MasterPage from './pages/MasterPage';
 import IndexPage from './pages/IndexPage';
 import ProfilePage from './pages/ProfilePage';
+import JobsPage from './pages/JobsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -14,6 +15,7 @@ ReactDOM.render(
             <Route path='/login' component={LoginPage}/>
             <Route path='/register' component={RegisterPage}/>
             <Route path='/profile' component={ProfilePage}/>
+            <Route path='/jobs' component={JobsPage}/>
         </Route>
     </Router>
   , document.getElementById('app-container')
