@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import request from 'superagent';
 
 export default class ProfilePage extends React.Component {
@@ -90,62 +91,72 @@ export default class ProfilePage extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-12">
+            <Grid>
+                <Row>
+                    <Col>
                         <h3>Update Profile</h3>
                         <hr />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="form-horizontal">
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Name</label>
+                    <Row>
+                        <Col>
+                            <Form horizontal>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Name
+                                    </Col>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" placeholder="Name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
+                                        <FormControl placeholder="Name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Email</label>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Email
+                                    </Col>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
+                                        <FormControl placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Phone Number</label>
-                                    <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Resume</label>
-                                    <div className="col-xs-12 col-sm-4">
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Phone Number
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormControl placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Resume
+                                    </Col>
+                                    <Col md={4}>
                                         <label className="btn btn-default btn-file">
-                                            Browse<input type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
+                                            Browse<FormControl type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
                                         </label>
                                         <span id="resume_filename" className="control-label pull-right">{this.state.resume_filename}</span>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Cover Letter</label>
-                                    <div className="col-xs-12 col-sm-4">
-                                        <textarea className="form-control" value={this.state.coverletter} onChange={this.handleChange.bind(this, 'coverletter')} rows="10"/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="col-sm-offset-4 col-sm-4">
-                                        <button type="submit" className="btn btn-primary">
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Cover Letter
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormControl componentClass="textarea" rows="10" value={this.state.coverletter} onChange={this.handleChange.bind(this, 'coverletter')}/>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} mdOffset={4}>
+                                        <Button bsStyle="primary" type="submit">
                                             Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        </Button>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </Col>
+                    </Row>
                 </form>
-            </div>
+            </Grid>
         );
     }
 }

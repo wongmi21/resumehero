@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import request from 'superagent';
 
 export default class LoginPage extends React.Component {
@@ -48,41 +49,45 @@ export default class LoginPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-12">
+            <Grid>
+                <Row>
+                    <Col>
                         <h3>Log In</h3>
                         <hr />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="form-horizontal">
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Username</label>
-                                    <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="col-xs-12 col-sm-4 control-label">Password</label>
-                                    <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="col-sm-offset-4 col-sm-4">
-                                        <button type="submit" className="btn btn-primary">
+                    <Row>
+                        <Col>
+                            <Form horizontal>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Username
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} componentClass={ControlLabel}>
+                                        Password
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col md={4} mdOffset={4}>
+                                        <Button bsStyle="primary" type="submit">
                                             Log In
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        </Button>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </Col>
+                    </Row>
                 </form>
-            </div>
+            </Grid>
         );
     }
 }

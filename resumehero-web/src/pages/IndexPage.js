@@ -1,13 +1,14 @@
 import React from 'react';
+import { Grid, Jumbotron } from 'react-bootstrap';
 
 export default class IndexPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <Grid>
                 <h2 className="text-center">Welcome to ResumeHero!</h2>
                 <hr />
-                <div className="jumbotron">
+                <Jumbotron>
                     <p>
                         <strong>We help job applicants apply to hundreds of jobs in just a few mouse clicks.</strong>
                     </p>
@@ -20,8 +21,8 @@ export default class IndexPage extends React.Component {
                         <li>Phone: +65 98413620</li>
                         <li>Email: mi.wong.mt@gmail.com</li>
                     </ul>
-                </div>
-            </div>
+                </Jumbotron>
+            </Grid>
         );
     }
 }

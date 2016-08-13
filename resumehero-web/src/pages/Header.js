@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Authenticated from '../components/Authenticated';
 import NotAuthenticated from '../components/NotAuthenticated';
@@ -13,7 +13,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <Navbar bsStyle="default">
-                <div className="container">
+                <Grid>
                     <Nav>
                         <IndexLinkContainer to="/"><NavItem>Home</NavItem></IndexLinkContainer>
                         <Authenticated>
@@ -34,7 +34,7 @@ export default class Header extends React.Component {
                             <LinkContainer to="/register"><NavItem>Create Account</NavItem></LinkContainer>
                         </NotAuthenticated>
                     </Nav>
-                </div>
+                </Grid>
             </Navbar>
         );
     }
