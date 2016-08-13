@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col, Form, FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import request from 'superagent';
 
 export default class RegisterPage extends React.Component {
@@ -33,11 +33,12 @@ export default class RegisterPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
+                    this.context.changeUser(res.body);
                     alert('Registration complete');
                 } else {
                     alert('Registration failed');
                 }
-            });
+            }.bind(this));
     }
 
     handleChange(field, e) {
@@ -51,46 +52,45 @@ export default class RegisterPage extends React.Component {
             <Grid>
                 <Row>
                     <Col>
-                        <h3>Register</h3>
+                        <h3>Log In</h3>
                         <hr />
                     </Col>
                 </Row>
-                <form onSubmit={this.handleSubmit}>
-                    <Row>
-                        <Col>
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col md={4} componentClass={ControlLabel}>
-                                        Username
-                                    </Col>
-                                    <Col md={4}>
-                                        <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col md={4} componentClass={ControlLabel}>
-                                        Password
-                                    </Col>
-                                    <Col md={4}>
-                                        <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col md={4} mdOffset={4}>
-                                        <Button bsStyle="primary" type="submit">
-                                            Log In
-                                        </Button>
-                                    </Col>
-                                </FormGroup>
-                            </Form>
-                        </Col>
-                    </Row>
-                </form>
+                <Row>
+                    <Col>
+                        <Form horizontal onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Col md={4} componentClass={ControlLabel}>
+                                    Username
+                                </Col>
+                                <Col md={4}>
+                                    <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col md={4} componentClass={ControlLabel}>
+                                    Password
+                                </Col>
+                                <Col md={4}>
+                                    <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col md={4} mdOffset={4}>
+                                    <Button bsStyle="primary" type="submit">
+                                        Register
+                                    </Button>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    </Col>
+                </Row>
             </Grid>
         );
     }
 }
 
 RegisterPage.contextTypes = {
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    changeUser: React.PropTypes.func
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Grid, Row, Col, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Authenticated from '../components/Authenticated';
 import NotAuthenticated from '../components/NotAuthenticated';
@@ -13,28 +13,26 @@ export default class Header extends React.Component {
     render() {
         return (
             <Navbar bsStyle="default">
-                <Grid>
-                    <Nav>
-                        <IndexLinkContainer to="/"><NavItem>Home</NavItem></IndexLinkContainer>
-                        <Authenticated>
-                            <LinkContainer to="/profile"><NavItem>Profile</NavItem></LinkContainer>
-                        </Authenticated>
-                        <Authenticated>
-                            <LinkContainer to="/jobs"><NavItem>Jobs</NavItem></LinkContainer>
-                        </Authenticated>
-                    </Nav>
-                    <Nav pullRight>
-                        <Authenticated>
-                            <IndexLinkContainer to="/logout"><NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem></IndexLinkContainer>
-                        </Authenticated>
-                        <NotAuthenticated>
-                            <LinkContainer to="/login"><NavItem>Log In</NavItem></LinkContainer>
-                        </NotAuthenticated>
-                        <NotAuthenticated>
-                            <LinkContainer to="/register"><NavItem>Create Account</NavItem></LinkContainer>
-                        </NotAuthenticated>
-                    </Nav>
-                </Grid>
+                <Nav>
+                    <IndexLinkContainer to="/"><NavItem>Home</NavItem></IndexLinkContainer>
+                    <Authenticated>
+                        <LinkContainer to="/profile"><NavItem>Profile</NavItem></LinkContainer>
+                    </Authenticated>
+                    <Authenticated>
+                        <LinkContainer to="/jobs"><NavItem>Jobs</NavItem></LinkContainer>
+                    </Authenticated>
+                </Nav>
+                <Nav pullRight>
+                    <Authenticated>
+                        <IndexLinkContainer to="/logout"><NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem></IndexLinkContainer>
+                    </Authenticated>
+                    <NotAuthenticated>
+                        <LinkContainer to="/login"><NavItem>Log In</NavItem></LinkContainer>
+                    </NotAuthenticated>
+                    <NotAuthenticated>
+                        <LinkContainer to="/register"><NavItem>Create Account</NavItem></LinkContainer>
+                    </NotAuthenticated>
+                </Nav>
             </Navbar>
         );
     }

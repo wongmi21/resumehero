@@ -56,37 +56,35 @@ export default class LoginPage extends React.Component {
                         <hr />
                     </Col>
                 </Row>
-                <form onSubmit={this.handleSubmit}>
-                    <Row>
-                        <Col>
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col md={4} componentClass={ControlLabel}>
-                                        Username
-                                    </Col>
-                                    <Col md={4}>
-                                        <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col md={4} componentClass={ControlLabel}>
-                                        Password
-                                    </Col>
-                                    <Col md={4}>
-                                        <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col md={4} mdOffset={4}>
-                                        <Button bsStyle="primary" type="submit">
-                                            Log In
-                                        </Button>
-                                    </Col>
-                                </FormGroup>
-                            </Form>
-                        </Col>
-                    </Row>
-                </form>
+                <Row>
+                    <Col>
+                        <Form horizontal onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Col md={4} componentClass={ControlLabel}>
+                                    Username
+                                </Col>
+                                <Col md={4}>
+                                    <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col md={4} componentClass={ControlLabel}>
+                                    Password
+                                </Col>
+                                <Col md={4}>
+                                    <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col md={4} mdOffset={4}>
+                                    <Button bsStyle="primary" type="submit">
+                                        Log In
+                                    </Button>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    </Col>
+                </Row>
             </Grid>
         );
     }
