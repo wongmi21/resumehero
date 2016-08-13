@@ -7,6 +7,7 @@ export default class ProfilePage extends React.Component {
         super();
         this.state = {
             name: "",
+            email: "",
             phonenumber: "",
             resume: {},
             resume_filename: "",
@@ -31,13 +32,14 @@ export default class ProfilePage extends React.Component {
         request
             .get('/user')
             .query({
-                email: this.context.user.email,
+                username: this.context.user.username,
                 password: this.context.user.password
             })
             .end(function(err, res) {
                 if (res.ok) {
                     this.setState({
                         name: res.body.user.name,
+                        email: res.body.user.email,
                         phonenumber: res.body.user.phonenumber,
                         resume_filename: res.body.user.resume ? res.body.user.resume.originalname : null,
                         coverletter: res.body.user.coverletter
@@ -50,8 +52,10 @@ export default class ProfilePage extends React.Component {
         e.preventDefault();
 
         var fd = new FormData();
-        fd.append('email', this.context.user.email);
+        fd.append('username', this.context.user.username);
+        fd.append('password', this.context.user.password);
         fd.append('name', this.state.name);
+        fd.append('email', this.state.email);
         fd.append('resume', this.state.resume);
         fd.append('phonenumber', this.state.phonenumber);
         fd.append('coverletter', this.state.coverletter);
@@ -98,22 +102,25 @@ export default class ProfilePage extends React.Component {
                         <div className="col-xs-12">
                             <div className="form-horizontal">
                                 <div className="form-group">
-                                    <label htmlFor="name" className="col-xs-12 col-sm-4 control-label">Name</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Name</label>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="name" name="name" placeholder="Name"
-                                               value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
+                                        <input className="form-control" placeholder="Name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Phone Number</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Email</label>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="phonenumber" name="phonenumber" placeholder="Phone Number"
-                                               value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
+                                        <input className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="resume"
-                                           className="col-xs-12 col-sm-4 control-label">Resume</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Phone Number</label>
+                                    <div className="col-xs-12 col-sm-4">
+                                        <input className="form-control" placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label className="col-xs-12 col-sm-4 control-label">Resume</label>
                                     <div className="col-xs-12 col-sm-4">
                                         <label className="btn btn-default btn-file">
                                             Browse<input type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
@@ -122,12 +129,9 @@ export default class ProfilePage extends React.Component {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="coverletter"
-                                           className="col-xs-12 col-sm-4 control-label">Cover
-                                        Letter</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Cover Letter</label>
                                     <div className="col-xs-12 col-sm-4">
-                                                <textarea className="form-control" id="coverletter" value={this.state.coverletter}
-                                                          onChange={this.handleChange.bind(this, 'coverletter')} name="coverletter" rows="10"/>
+                                        <textarea className="form-control" value={this.state.coverletter} onChange={this.handleChange.bind(this, 'coverletter')} rows="10"/>
                                     </div>
                                 </div>
                                 <div className="form-group">

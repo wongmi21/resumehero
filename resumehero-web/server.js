@@ -10,9 +10,10 @@ var upload = multer({ dest: 'uploads/' });
 mongoose.connect('mongodb://localhost:27017/resumehero');
 
 var userSchema = mongoose.Schema({
-    email: {type: String, required: true, unique: true},
+    username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     name: String,
+    email: String,
     phonenumber: String,
     resume: {},
     coverletter: String
@@ -29,7 +30,7 @@ app.use(bodyParser.json());
 
 app.post('/register', function(req, res) {
     var user = new User({
-        email: req.body.email,
+        username: req.body.username,
         password: req.body.password
     });
     user.save(function(err) {
@@ -41,7 +42,7 @@ app.post('/register', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-    User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
+    User.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
         if (user) {
             res.json(user);
         } else {
@@ -52,9 +53,10 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/profile', upload.any(), function(req, res) {
-    User.findOne({ email: req.body.email }, function (err, user) {
+    User.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
         if (user) {
             user.name = req.body.name;
+            user.email = req.body.email;
             user.phonenumber = req.body.phonenumber;
             user.resume = req.files[0];
             user.coverletter = req.body.coverletter;
@@ -72,7 +74,7 @@ app.post('/profile', upload.any(), function(req, res) {
 });
 
 app.get('/user', function(req, res) {
-    User.findOne({ email: req.query.email, password: req.query.password }, function (err, user) {
+    User.findOne({ username: req.query.username, password: req.query.password }, function (err, user) {
         if (user) {
             res.json({
                 user: user

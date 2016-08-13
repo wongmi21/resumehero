@@ -6,7 +6,7 @@ export default class LoginPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            email: "",
+            username: "",
             password: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +27,7 @@ export default class LoginPage extends React.Component {
         request
             .post('/login')
             .send({
-                email: this.state.email,
+                username: this.state.username,
                 password: this.state.password
             })
             .end(function (err, res) {
@@ -60,15 +60,15 @@ export default class LoginPage extends React.Component {
                         <div className="col-xs-12">
                             <div className="form-horizontal">
                                 <div className="form-group">
-                                    <label htmlFor="email" className="col-xs-12 col-sm-4 control-label">Email</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Username</label>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="email" placeholder="Email" required="true" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
+                                        <input className="form-control" placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="password" className="col-xs-12 col-sm-4 control-label">Password</label>
+                                    <label className="col-xs-12 col-sm-4 control-label">Password</label>
                                     <div className="col-xs-12 col-sm-4">
-                                        <input className="form-control" id="password" placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                                        <input className="form-control" placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
