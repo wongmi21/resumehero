@@ -33,7 +33,6 @@ export default class RegisterPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    this.context.changeUser(res.body);
                     alert('Registration complete');
                 } else {
                     alert('Registration failed');
@@ -83,6 +82,5 @@ export default class RegisterPage extends React.Component {
 }
 
 RegisterPage.contextTypes = {
-    user: React.PropTypes.object,
-    changeUser: React.PropTypes.func
+    user: React.PropTypes.object
 };
