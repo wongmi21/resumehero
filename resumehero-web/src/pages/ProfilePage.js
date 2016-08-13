@@ -92,68 +92,60 @@ export default class ProfilePage extends React.Component {
     render() {
         return (
             <Grid>
-                <Row>
-                    <Col>
-                        <h3>Update Profile</h3>
-                        <hr />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form horizontal onSubmit={this.handleSubmit}>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Name
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl placeholder="Name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Email
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Phone Number
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Resume
-                                </Col>
-                                <Col md={4}>
-                                    <label className="btn btn-default btn-file">
-                                        Browse<FormControl type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
-                                    </label>
-                                    <span id="resume_filename" className="control-label pull-right">{this.state.resume_filename}</span>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Cover Letter
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl componentClass="textarea" rows="10" value={this.state.coverletter} onChange={this.handleChange.bind(this, 'coverletter')}/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} mdOffset={4}>
-                                    <Button bsStyle="primary" type="submit">
-                                        Update
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
-                    </Col>
-                </Row>
+                <h3>Update Profile</h3>
+                <hr />
+                <Form horizontal onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Name
+                        </Col>
+                        <Col md={4}>
+                            <FormControl placeholder="Name" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} required="true"/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Email
+                        </Col>
+                        <Col md={4}>
+                            <FormControl placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} required="true"/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Phone Number
+                        </Col>
+                        <Col md={4}>
+                            <FormControl placeholder="Phone Number" value={this.state.phonenumber} onChange={this.handleChange.bind(this, 'phonenumber')} required="true"/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Resume
+                        </Col>
+                        <Col md={4}>
+                            <label className="btn btn-default btn-file">
+                                Browse<FormControl type="file" style={{display: 'none'}} onChange={this.changeResume.bind(this)}/>
+                            </label>
+                            <span id="resume_filename" className="control-label pull-right">{this.state.resume_filename}</span>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Cover Letter
+                        </Col>
+                        <Col md={4}>
+                            <FormControl componentClass="textarea" rows="10" value={this.state.coverletter} onChange={this.handleChange.bind(this, 'coverletter')}/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} mdOffset={4}>
+                            <Button bsStyle="primary" type="submit">
+                                Update
+                            </Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
             </Grid>
         );
     }

@@ -50,41 +50,33 @@ export default class RegisterPage extends React.Component {
     render() {
         return (
             <Grid>
-                <Row>
-                    <Col>
-                        <h3>Log In</h3>
-                        <hr />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form horizontal onSubmit={this.handleSubmit}>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Username
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} componentClass={ControlLabel}>
-                                    Password
-                                </Col>
-                                <Col md={4}>
-                                    <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col md={4} mdOffset={4}>
-                                    <Button bsStyle="primary" type="submit">
-                                        Register
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
-                    </Col>
-                </Row>
+                <h3>Register</h3>
+                <hr />
+                <Form horizontal onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Username
+                        </Col>
+                        <Col md={4}>
+                            <FormControl placeholder="Username" required="true" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} componentClass={ControlLabel}>
+                            Password
+                        </Col>
+                        <Col md={4}>
+                            <FormControl placeholder="Password" type="password" required="true" value={this.state.password} onChange={this.handleChange.bind(this, 'password')}/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col md={4} mdOffset={4}>
+                            <Button bsStyle="primary" type="submit">
+                                Register
+                            </Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
             </Grid>
         );
     }
