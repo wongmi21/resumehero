@@ -58,7 +58,9 @@ app.post('/profile', upload.any(), function(req, res) {
             user.name = req.body.name;
             user.email = req.body.email;
             user.phonenumber = req.body.phonenumber;
-            user.resume = req.files[0];
+            if (req.files[0] !== undefined) {
+                user.resume = req.files[0];
+            }
             user.coverletter = req.body.coverletter;
             user.save(function(err) {
                 if (err) {
