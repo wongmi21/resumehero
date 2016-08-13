@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, FormGroup, FormControl, InputGroup, Button } from 'react-bootstrap';
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Authenticated from '../components/Authenticated';
 import NotAuthenticated from '../components/NotAuthenticated';
@@ -19,7 +19,19 @@ export default class Header extends React.Component {
                         <LinkContainer to="/profile"><NavItem>Profile</NavItem></LinkContainer>
                     </Authenticated>
                     <Authenticated>
-                        <LinkContainer to="/jobs"><NavItem>Jobs</NavItem></LinkContainer>
+                        <LinkContainer to="/jobs">
+                            <Navbar.Form pullLeft>
+                                <FormGroup>
+                                    <FormControl placeholder="Search Jobs" />
+                                </FormGroup>
+                                {' '}
+                                <FormGroup>
+                                    <FormControl placeholder="Location" />
+                                </FormGroup>
+                                {' '}
+                                <Button>Search</Button>
+                            </Navbar.Form>
+                        </LinkContainer>
                     </Authenticated>
                 </Nav>
                 <Nav pullRight>
