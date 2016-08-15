@@ -6,8 +6,20 @@ import NotAuthenticated from '../components/NotAuthenticated';
 
 export default class Header extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            query: ""
+        }
+    }
+
     handleLogout() {
         this.context.changeUser(undefined);
+    }
+
+    handleSearch(e) {
+        this.setState({ query: e.target.value });
+        this.context.changeQuery(e.target.value);
     }
 
     render() {
@@ -22,14 +34,8 @@ export default class Header extends React.Component {
                         <LinkContainer to="/jobs">
                             <Navbar.Form pullLeft>
                                 <FormGroup>
-                                    <FormControl placeholder="Search Jobs" />
+                                    <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} />
                                 </FormGroup>
-                                {' '}
-                                <FormGroup>
-                                    <FormControl placeholder="Location" />
-                                </FormGroup>
-                                {' '}
-                                <Button>Search</Button>
                             </Navbar.Form>
                         </LinkContainer>
                     </Authenticated>
@@ -51,5 +57,6 @@ export default class Header extends React.Component {
 }
 
 Header.contextTypes = {
-    changeUser: React.PropTypes.func
+    changeUser: React.PropTypes.func,
+    changeQuery: React.PropTypes.func
 };

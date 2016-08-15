@@ -7,7 +7,8 @@ export default class JobsPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            jobs: {}
+            jobs: {},
+            query: ""
         }
     }
 
@@ -19,10 +20,18 @@ export default class JobsPage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.context.hookChangeSearchResults(this.changeSearchResults.bind(this));
+    }
+
+    changeSearchResults(query) {
+        this.setState({ query: query });
+    }
+
     render() {
         return (
             <Grid>
-                <h3>Search Results</h3>
+                <h3>Search Results: {this.state.query}</h3>
                 <hr />
                 <SearchResults />
             </Grid>
@@ -31,5 +40,6 @@ export default class JobsPage extends React.Component {
 }
 
 JobsPage.contextTypes = {
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    hookChangeSearchResults: React.PropTypes.func
 };

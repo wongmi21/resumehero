@@ -6,14 +6,17 @@ export default class MasterPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            user: JSON.parse(localStorage.getItem('user')) || undefined
+            user: JSON.parse(localStorage.getItem('user')) || undefined,
+            changeSearchResults: undefined
         };
     }
 
     getChildContext() {
         return {
             user: this.state.user,
-            changeUser: this.changeUser.bind(this)
+            changeUser: this.changeUser.bind(this),
+            changeQuery: this.changeQuery.bind(this),
+            hookChangeSearchResults: this.hookChangeSearchResults.bind(this)
         };
     }
 
@@ -24,6 +27,14 @@ export default class MasterPage extends React.Component {
         } else {
             localStorage.setItem('user', JSON.stringify(user));
         }
+    }
+
+    changeQuery(query) {
+        this.state.changeSearchResults(query);
+    }
+
+    hookChangeSearchResults(changeSearchResults) {
+        this.setState({ changeSearchResults: changeSearchResults });
     }
 
     render() {
@@ -38,5 +49,7 @@ export default class MasterPage extends React.Component {
 
 MasterPage.childContextTypes = {
     user: React.PropTypes.object,
-    changeUser: React.PropTypes.func
+    changeUser: React.PropTypes.func,
+    changeQuery: React.PropTypes.func,
+    hookChangeSearchResults: React.PropTypes.func
 };
