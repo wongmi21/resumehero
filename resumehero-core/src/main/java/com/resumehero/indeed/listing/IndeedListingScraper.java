@@ -16,7 +16,8 @@ import java.util.List;
 @ConfigurationProperties(prefix = "indeed-listing-scraper")
 public class IndeedListingScraper {
 
-    private static final String INDEED_URL = "http://www.indeed.com.sg/jobs?q=%s&l=%s&start=%d&limit=100&sort=date";
+    private static final String INDEED_URL = "http://www.indeed.com.sg/jobs?q=%s&l=%s&jt=%s&start=%d&limit=%d&sort=date";
+    private static final int LIMIT = 100;
 
     private List<Search> searches = new ArrayList<>();
 
@@ -27,12 +28,22 @@ public class IndeedListingScraper {
 
     public void invoke() throws Exception {
         for (Search search : getSearches()) {
-            String initialUrl = String.format(INDEED_URL, search.getQuery(), search.getLocation(), 0);
+            String initialUrl = String.format(INDEED_URL, search.getQuery(), search.getLocation(), search.getJobtype(), 0, LIMIT);
             Document firstPage = Jsoup.connect(initialUrl).get();
             int totalResults = parser.totalResults(firstPage);
-            // Indeed only returns max 1100 results per search
-
-            jobRepo.save(parser.listings(firstPage));
+            int pages = Math.min(totalResults / LIMIT, (1000 + LIMIT) / LIMIT);
+            for (int i = 0; i < pages; i++) {
+                Document doc;
+                if (i == 0) {
+                    doc = firstPage;
+                } else {
+                    String url = String.format(INDEED_URL, search.getQuery(), search.getLocation(), search.getJobtype(), i * LIMIT, LIMIT);
+                    doc = Jsoup.connect(url).get();
+                }
+                List<IndeedJob> listings = parser.listings(doc);
+                jobRepo.save(listings);
+                System.out.println("query: " + search.getQuery() + ", location: " + search.getLocation() + ", jobtype: " + search.getJobtype() + ", page: " + i + ", results:  " + listings.size());
+            }
         }
     }
 

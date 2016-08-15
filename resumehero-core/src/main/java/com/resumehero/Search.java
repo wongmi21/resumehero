@@ -4,6 +4,7 @@ public class Search {
 
     private String query;
     private String location;
+    private String jobtype;
 
     public String getQuery() {
         return query;
@@ -19,5 +20,13 @@ public class Search {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getJobtype() {
+        return jobtype;
+    }
+
+    public void setJobtype(String jobtype) {
+        this.jobtype = jobtype;
     }
 }

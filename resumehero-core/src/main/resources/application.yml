@@ -8,12 +8,12 @@ spring:
     generate-ddl: true
 indeed-listing-scraper:
   searches:
-  - q: java
-    l:
-    jt: fulltime
-  - q: php
-    l:
-    jt: fulltime
-  - q: ruby
-    l:
-    jt: fulltime
+  - query: java
+    location:
+    jobtype: fulltime
+  - query: php
+    location:
+    jobtype: fulltime
+  - query: ruby
+    location:
+    jobtype: fulltime
