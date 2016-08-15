@@ -1,13 +1,11 @@
 package com.resumehero.indeed;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
-@Entity
 public class IndeedJob {
 
     @Id
-    private String key_;
+    private String key;
     private String title;
     private String company;
     private String location;
@@ -21,7 +19,7 @@ public class IndeedJob {
     }
 
     public IndeedJob(String key, String title, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
-        this.key_ = key;
+        this.key = key;
         this.title = title;
         this.company = company;
         this.location = location;
@@ -32,11 +30,11 @@ public class IndeedJob {
     }
 
     public String getKey() {
-        return key_;
+        return key;
     }
 
     public void setKey(String key) {
-        this.key_ = key;
+        this.key = key;
     }
 
     public String getTitle() {
