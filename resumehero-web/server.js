@@ -21,6 +21,18 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
+var jobSchema = mongoose.Schema({
+    _id: {type: String, required: true, unique: true},
+    _class: String,
+    title: String,
+    company: String,
+    location: String,
+    snippet: String,
+    indeedApply: Boolean
+});
+
+var Job = mongoose.model('Job', jobSchema);
+
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
@@ -86,6 +98,19 @@ app.get('/user', function(req, res) {
         }
         res.end();
     });
+});
+
+app.get('/jobs', function(req, res) {
+    Job.find({ title: new RegExp(req.query.q, 'i'), indeedApply: true }, function (err, jobs) {
+        if (jobs) {
+            res.json({
+                jobs: jobs
+            });
+        } else {
+            res.status(400);
+        }
+        res.end();
+    }).limit(10);
 });
 
 app.get('*', function(req, res) {

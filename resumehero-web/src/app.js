@@ -6,7 +6,7 @@ import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
-import JobsPage from './pages/JobsPage';
+import SearchPage from './pages/SearchPage';
 
 function logout(nextState, replace) {
     replace('/');
@@ -19,7 +19,7 @@ ReactDOM.render(
             <Route path='/login' component={LoginPage}/>
             <Route path='/register' component={RegisterPage}/>
             <Route path='/profile' component={ProfilePage}/>
-            <Route path='/jobs' component={JobsPage}/>
+            <Route path='/search' component={SearchPage}/>
             <Route path='/logout' onEnter={logout}/>
         </Route>
     </Router>

@@ -8,8 +8,8 @@ export default class SearchResult extends React.Component {
             <Row>
                 <Col md={8}>
                     <div>
-                        <a href={this.props.result.url}><strong>{this.props.result.jobtitle}</strong></a>
-                        <div>{this.props.result.company} - {this.props.result.formattedLocationFull}</div>
+                        <a target="_blank" href={this.props.result.url}><strong>{this.props.result.title}</strong></a>
+                        <div>{this.props.result.company} - {this.props.result.location}</div>
                         <span>{this.props.result.snippet}</span>
                     </div>
                     <p/>

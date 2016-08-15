@@ -1,13 +1,14 @@
 import React from 'react';
 import { Grid } from 'react-bootstrap';
+import request from 'superagent';
 import SearchResults from '../components/SearchResults';
 
-export default class JobsPage extends React.Component {
+export default class SearchPage extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            jobs: {},
+            jobs: [],
             query: ""
         }
     }
@@ -26,20 +27,31 @@ export default class JobsPage extends React.Component {
 
     changeSearchResults(query) {
         this.setState({ query: query });
+        request
+            .get('/jobs')
+            .query({
+                q: query
+            })
+            .end(function (err, res) {
+                if (res.ok) {
+                    this.setState({ jobs: res.body.jobs });
+                }
+            }.bind(this));
     }
 
     render() {
+
         return (
             <Grid>
                 <h3>Search Results: {this.state.query}</h3>
                 <hr />
-                <SearchResults />
+                <SearchResults jobs={this.state.jobs} />
             </Grid>
         );
     }
 }
 
-JobsPage.contextTypes = {
+SearchPage.contextTypes = {
     user: React.PropTypes.object,
     hookChangeSearchResults: React.PropTypes.func
 };

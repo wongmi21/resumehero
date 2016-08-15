@@ -35,7 +35,7 @@ export default class Header extends React.Component {
                         <LinkContainer to="/profile"><NavItem>Profile</NavItem></LinkContainer>
                     </Authenticated>
                     <Authenticated>
-                        <LinkContainer to="/jobs">
+                        <LinkContainer to="/search">
                             <Navbar.Form pullLeft>
                                 <FormGroup>
                                     <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} onBlur={this.handleBlur.bind(this)} />
