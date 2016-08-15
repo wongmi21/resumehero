@@ -9,7 +9,7 @@ export default class SearchResult extends React.Component {
                 <Col md={8}>
                     <div>
                         <a href={this.props.result.url}><strong>{this.props.result.jobtitle}</strong></a>
-                        <div>{this.props.result.company} - {this.props.result.formatted_location_full}</div>
+                        <div>{this.props.result.company} - {this.props.result.formattedLocationFull}</div>
                         <span>{this.props.result.snippet}</span>
                     </div>
                     <p/>
