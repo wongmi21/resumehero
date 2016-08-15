@@ -24,11 +24,12 @@ public class IndeedListingParser {
         for (Element result : results) {
             String key = result.attr("data-jk");
             String title = result.getElementsByClass("jobtitle").text();
+            String url = "http://www.indeed.com/viewjob?jk=" + key;
             String company = result.getElementsByClass("company").text();
             String location = result.getElementsByClass("location").text();
             String snippet = result.getElementsByClass("summary").text();
             boolean indeedApply = StringUtils.containsIgnoreCase(result.getElementsByClass("iaLabel").text(), "apply");
-            listings.add(new IndeedJob(key, title, company, location, snippet, indeedApply, null, null));
+            listings.add(new IndeedJob(key, title, url, company, location, snippet, indeedApply, null, null));
         }
 
         return listings;

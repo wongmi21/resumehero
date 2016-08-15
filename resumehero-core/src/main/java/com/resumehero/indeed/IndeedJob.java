@@ -1,12 +1,15 @@
 package com.resumehero.indeed;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "jobs")
 public class IndeedJob {
 
     @Id
     private String key;
     private String title;
+    private String url;
     private String company;
     private String location;
     private String snippet;
@@ -18,9 +21,10 @@ public class IndeedJob {
     public IndeedJob() {
     }
 
-    public IndeedJob(String key, String title, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
+    public IndeedJob(String key, String title, String url, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
         this.key = key;
         this.title = title;
+        this.url = url;
         this.company = company;
         this.location = location;
         this.snippet = snippet;
@@ -43,6 +47,14 @@ public class IndeedJob {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getCompany() {
