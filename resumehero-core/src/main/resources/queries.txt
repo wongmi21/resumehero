@@ -1,4 +1,0 @@
-java
-javascript
-ruby
-php

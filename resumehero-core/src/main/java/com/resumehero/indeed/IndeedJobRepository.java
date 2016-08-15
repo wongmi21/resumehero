@@ -1,8 +1,8 @@
-package com.resumehero.job;
+package com.resumehero.indeed;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JobRepository extends CrudRepository<Job, String> {
+public interface IndeedJobRepository extends CrudRepository<IndeedJob, String> {
 }
