@@ -1,6 +1,5 @@
-package com.resumehero.indeed.listing;
+package com.resumehero;
 
-import com.resumehero.indeed.IndeedJob;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class IndeedListingParser {
+public class ListingParser {
 
     public int totalResults(Document doc) {
         return Integer.parseInt(StringUtils.remove(StringUtils.substringAfter(doc.getElementById("searchCount").html(), "of "), ','));
     }
 
-    public List<IndeedJob> listings(Document doc) {
-        List<IndeedJob> listings = new ArrayList<>();
+    public List<Job> listings(Document doc) {
+        List<Job> listings = new ArrayList<>();
 
         Elements results = doc.getElementsByClass("result");
         for (Element result : results) {
@@ -29,7 +28,7 @@ public class IndeedListingParser {
             String location = result.getElementsByClass("location").text();
             String snippet = result.getElementsByClass("summary").text();
             boolean indeedApply = StringUtils.containsIgnoreCase(result.getElementsByClass("iaLabel").text(), "apply");
-            listings.add(new IndeedJob(key, title, url, company, location, snippet, indeedApply, null, null));
+            listings.add(new Job(key, title, url, company, location, snippet, indeedApply, null, null));
         }
 
         return listings;

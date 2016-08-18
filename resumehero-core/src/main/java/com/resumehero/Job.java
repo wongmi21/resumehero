@@ -1,10 +1,10 @@
-package com.resumehero.indeed;
+package com.resumehero;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "jobs")
-public class IndeedJob {
+public class Job {
 
     @Id
     private String key;
@@ -18,10 +18,10 @@ public class IndeedJob {
     private String summary;
     private String applyUrl;
 
-    public IndeedJob() {
+    public Job() {
     }
 
-    public IndeedJob(String key, String title, String url, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
+    public Job(String key, String title, String url, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
         this.key = key;
         this.title = title;
         this.url = url;

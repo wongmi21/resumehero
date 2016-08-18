@@ -15,3 +15,12 @@ indeed-listing-scraper:
   - query: ruby
     location:
     jobtype: fulltime
+  - query: accounting
+    location:
+    jobtype: fulltime
+  - query: accountant
+    location:
+    jobtype: fulltime
+  - query: lawyer
+    location:
+    jobtype: fulltime

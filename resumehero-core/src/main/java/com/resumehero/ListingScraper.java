@@ -1,8 +1,5 @@
-package com.resumehero.indeed.listing;
+package com.resumehero;
 
-import com.resumehero.Search;
-import com.resumehero.indeed.IndeedJob;
-import com.resumehero.indeed.IndeedJobRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,7 @@ import java.util.List;
 
 @Component
 @ConfigurationProperties(prefix = "indeed-listing-scraper")
-public class IndeedListingScraper {
+public class ListingScraper {
 
     private static final String INDEED_URL = "http://www.indeed.com.sg/jobs?q=%s&l=%s&jt=%s&start=%d&limit=%d&sort=date";
     private static final int LIMIT = 100;
@@ -22,9 +19,9 @@ public class IndeedListingScraper {
     private List<Search> searches = new ArrayList<>();
 
     @Autowired
-    private IndeedListingParser parser;
+    private ListingParser parser;
     @Autowired
-    private IndeedJobRepository jobRepo;
+    private JobRepository jobRepo;
 
     public void invoke() throws Exception {
         for (Search search : getSearches()) {
@@ -40,7 +37,7 @@ public class IndeedListingScraper {
                     String url = String.format(INDEED_URL, search.getQuery(), search.getLocation(), search.getJobtype(), i * LIMIT, LIMIT);
                     doc = Jsoup.connect(url).get();
                 }
-                List<IndeedJob> listings = parser.listings(doc);
+                List<Job> listings = parser.listings(doc);
                 jobRepo.save(listings);
                 System.out.println("query: " + search.getQuery() + ", location: " + search.getLocation() + ", jobtype: " + search.getJobtype() + ", page: " + i + ", results:  " + listings.size());
             }
