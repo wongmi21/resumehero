@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'react-bootstrap';
+import { Grid, Pagination } from 'react-bootstrap';
 import request from 'superagent';
 import SearchResults from '../components/SearchResults';
 
@@ -9,12 +9,14 @@ export default class SearchPage extends React.Component {
         super();
         this.state = {
             jobs: [],
-            query: ""
+            query: "",
+            page: 1,
+            totalResults: 1000
         }
     }
 
     componentWillMount() {
-        if(this.context.user === undefined) {
+        if (this.context.user === undefined) {
             this.render = function () {
                 return null;
             };
@@ -26,15 +28,32 @@ export default class SearchPage extends React.Component {
     }
 
     changeSearchResults(query) {
-        this.setState({ query: query });
+        this.setState({query: query});
+        this.setState({page: 1});
         request
             .get('/jobs')
             .query({
-                q: query
+                q: this.state.query,
+                page: this.state.page
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    this.setState({ jobs: res.body.jobs });
+                    this.setState({jobs: res.body.jobs});
+                }
+            }.bind(this));
+    }
+
+    handlePageChange(e) {
+        this.setState({page: e});
+        request
+            .get('/jobs')
+            .query({
+                q: this.state.query,
+                page: e
+            })
+            .end(function (err, res) {
+                if (res.ok) {
+                    this.setState({jobs: res.body.jobs});
                 }
             }.bind(this));
     }
@@ -45,7 +64,18 @@ export default class SearchPage extends React.Component {
             <Grid>
                 <h3>Search Results: {this.state.query}</h3>
                 <hr />
-                <SearchResults jobs={this.state.jobs} />
+                <SearchResults jobs={this.state.jobs}/>
+                <Pagination
+                    prev
+                    next
+                    first
+                    last
+                    ellipsis
+                    boundaryLinks
+                    items={10}
+                    maxButtons={10}
+                    activePage={this.state.page}
+                    onSelect={this.handlePageChange.bind(this)} />
             </Grid>
         );
     }

@@ -110,7 +110,7 @@ app.get('/jobs', function(req, res) {
             res.status(400);
         }
         res.end();
-    }).limit(10);
+    }).skip((req.query.page - 1) * 10).limit(10);
 });
 
 app.get('*', function(req, res) {

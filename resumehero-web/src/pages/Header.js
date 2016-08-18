@@ -22,10 +22,6 @@ export default class Header extends React.Component {
         this.context.changeQuery(e.target.value);
     }
 
-    handleBlur() {
-        this.setState({ query: "" });
-    }
-
     render() {
         return (
             <Navbar bsStyle="default">
@@ -38,7 +34,7 @@ export default class Header extends React.Component {
                         <LinkContainer to="/search">
                             <Navbar.Form pullLeft>
                                 <FormGroup>
-                                    <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} onBlur={this.handleBlur.bind(this)} />
+                                    <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} />
                                 </FormGroup>
                             </Navbar.Form>
                         </LinkContainer>
