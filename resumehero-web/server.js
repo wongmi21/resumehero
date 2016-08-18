@@ -103,7 +103,10 @@ app.get('/user', function(req, res) {
 });
 
 app.get('/jobs', function(req, res) {
-    Job.paginate({ title: new RegExp(req.query.q, 'i'), indeedApply: true }, { page: req.query.page, limit: 10 }, function(err, result) {
+    var regexClause = new RegExp(req.query.q, 'i');
+    var query = { $or: [{ title: regexClause }, { company: regexClause }, { snippet: regexClause }], indeedApply: true };
+    var pageSettings = { page: req.query.page, limit: 10 };
+    Job.paginate(query, pageSettings, function(err, result) {
         if (result) {
             res.json({
                 totalResults: result.total,
@@ -126,4 +129,12 @@ app.listen(3000, 'localhost', function (err) {
         return;
     }
     console.log('Listening at http://localhost:3000');
+});
+
+app.listen(3000, '192.168.1.10', function (err) {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    console.log('Listening at http://192.168.1.10:3000');
 });

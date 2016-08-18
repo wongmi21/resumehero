@@ -65,6 +65,9 @@ export default class SearchPage extends React.Component {
             <Grid>
                 <h3>Search Results: {this.state.query}</h3>
                 <hr />
+                <p>
+                    {this.state.totalResults} results found
+                </p>
                 <SearchResults jobs={this.state.jobs}/>
                 <Pagination
                     prev
@@ -73,7 +76,7 @@ export default class SearchPage extends React.Component {
                     last
                     ellipsis
                     boundaryLinks
-                    items={Math.floor(this.state.totalResults / 10)}
+                    items={Math.ceil(this.state.totalResults / 10)}
                     maxButtons={5}
                     activePage={this.state.page}
                     onSelect={this.handlePageChange.bind(this)} />
