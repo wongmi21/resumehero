@@ -6,6 +6,7 @@ var compiler = webpack(config);
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
+var mongoosePaginate = require('mongoose-paginate');
 
 mongoose.connect('mongodb://localhost:27017/resumehero');
 
@@ -30,6 +31,7 @@ var jobSchema = mongoose.Schema({
     snippet: String,
     indeedApply: Boolean
 });
+jobSchema.plugin(mongoosePaginate);
 
 var Job = mongoose.model('Job', jobSchema);
 
@@ -101,16 +103,17 @@ app.get('/user', function(req, res) {
 });
 
 app.get('/jobs', function(req, res) {
-    Job.find({ title: new RegExp(req.query.q, 'i'), indeedApply: true }, function (err, jobs) {
-        if (jobs) {
+    Job.paginate({ title: new RegExp(req.query.q, 'i'), indeedApply: true }, { page: req.query.page, limit: 10 }, function(err, result) {
+        if (result) {
             res.json({
-                jobs: jobs
+                totalResults: result.total,
+                jobs: result.docs
             });
         } else {
             res.status(400);
         }
         res.end();
-    }).skip((req.query.page - 1) * 10).limit(10);
+    });
 });
 
 app.get('*', function(req, res) {

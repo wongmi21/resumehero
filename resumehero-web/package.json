@@ -9,6 +9,7 @@
     "express": "^4.14.0",
     "fixed-data-table": "^0.6.3",
     "mongoose": "^4.5.8",
+    "mongoose-paginate": "^5.0.0",
     "multer": "^1.2.0",
     "react": "^15.3.0",
     "react-bootstrap": "^0.30.2",

@@ -22,6 +22,11 @@ export default class Header extends React.Component {
         this.context.changeQuery(e.target.value);
     }
 
+    handleFocus() {
+        this.setState({ query: "" });
+        this.context.changeQuery("");
+    }
+
     render() {
         return (
             <Navbar bsStyle="default">
@@ -34,7 +39,7 @@ export default class Header extends React.Component {
                         <LinkContainer to="/search">
                             <Navbar.Form pullLeft>
                                 <FormGroup>
-                                    <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} />
+                                    <FormControl placeholder="Search Jobs" value={this.state.query} onChange={this.handleSearch.bind(this)} onFocus={this.handleFocus.bind(this)} />
                                 </FormGroup>
                             </Navbar.Form>
                         </LinkContainer>

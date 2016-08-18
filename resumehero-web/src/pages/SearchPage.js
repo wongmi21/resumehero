@@ -11,7 +11,7 @@ export default class SearchPage extends React.Component {
             jobs: [],
             query: "",
             page: 1,
-            totalResults: 1000
+            totalResults: 0
         }
     }
 
@@ -25,11 +25,24 @@ export default class SearchPage extends React.Component {
 
     componentDidMount() {
         this.context.hookChangeSearchResults(this.changeSearchResults.bind(this));
+        this.search();
     }
 
     changeSearchResults(query) {
-        this.setState({query: query});
-        this.setState({page: 1});
+        this.setState({query: query}, function() {
+            this.setState({page: 1}, function() {
+                this.search();
+            });
+        });
+    }
+
+    handlePageChange(e) {
+        this.setState({page: e}, function() {
+            this.search();
+        });
+    }
+
+    search() {
         request
             .get('/jobs')
             .query({
@@ -38,22 +51,10 @@ export default class SearchPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    this.setState({jobs: res.body.jobs});
-                }
-            }.bind(this));
-    }
-
-    handlePageChange(e) {
-        this.setState({page: e});
-        request
-            .get('/jobs')
-            .query({
-                q: this.state.query,
-                page: e
-            })
-            .end(function (err, res) {
-                if (res.ok) {
-                    this.setState({jobs: res.body.jobs});
+                    this.setState({totalResults: res.body.totalResults});
+                    this.setState({jobs: res.body.jobs}, function () {
+                        scrollTo(0, 0);
+                    });
                 }
             }.bind(this));
     }
@@ -72,8 +73,8 @@ export default class SearchPage extends React.Component {
                     last
                     ellipsis
                     boundaryLinks
-                    items={10}
-                    maxButtons={10}
+                    items={Math.floor(this.state.totalResults / 10)}
+                    maxButtons={5}
                     activePage={this.state.page}
                     onSelect={this.handlePageChange.bind(this)} />
             </Grid>
