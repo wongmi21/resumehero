@@ -29,15 +29,16 @@ export default class SearchPage extends React.Component {
     }
 
     changeSearchResults(query) {
-        this.setState({query: query}, function() {
-            this.setState({page: 1}, function() {
-                this.search();
-            });
+        this.setState({
+            query: query,
+            page: 1
+        }, function() {
+            this.search();
         });
     }
 
     handlePageChange(e) {
-        this.setState({page: e}, function() {
+        this.setState({ page: e }, function() {
             this.search();
         });
     }
@@ -51,11 +52,14 @@ export default class SearchPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    this.setState({totalResults: res.body.totalResults});
-                    this.setState({jobs: res.body.jobs});
+                    this.setState({
+                        totalResults: res.body.totalResults,
+                        jobs: res.body.jobs
+                    }, function() {
+                        scrollTo(0, 0);
+                    });
                 }
             }.bind(this));
-        scrollTo(0, 0);
     }
 
     render() {
