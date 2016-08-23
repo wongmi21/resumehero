@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
+import ApplyButton from './ApplyButton';
 
 export default class SearchResult extends React.Component {
 
@@ -13,6 +14,9 @@ export default class SearchResult extends React.Component {
                         <span>{this.props.result.snippet}</span>
                     </div>
                     <p/>
+                </Col>
+                <Col md={4}>
+                    <ApplyButton jobKey={this.props.result._id} />
                 </Col>
             </Row>
         );

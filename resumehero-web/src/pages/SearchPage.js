@@ -52,11 +52,10 @@ export default class SearchPage extends React.Component {
             .end(function (err, res) {
                 if (res.ok) {
                     this.setState({totalResults: res.body.totalResults});
-                    this.setState({jobs: res.body.jobs}, function () {
-                        scrollTo(0, 0);
-                    });
+                    this.setState({jobs: res.body.jobs});
                 }
             }.bind(this));
+        scrollTo(0, 0);
     }
 
     render() {
@@ -66,7 +65,7 @@ export default class SearchPage extends React.Component {
                 <h3>Search Results: {this.state.query}</h3>
                 <hr />
                 <p>
-                    {this.state.totalResults} results found
+                    {this.state.totalResults} results - Page {this.state.page} of {Math.ceil(this.state.totalResults / 10)}
                 </p>
                 <SearchResults jobs={this.state.jobs}/>
                 <Pagination

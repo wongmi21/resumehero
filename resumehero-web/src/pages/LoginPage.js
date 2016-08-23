@@ -26,8 +26,8 @@ export default class LoginPage extends React.Component {
         e.preventDefault();
 
         request
-            .post('/login')
-            .send({
+            .get('/login')
+            .query({
                 username: this.state.username,
                 password: this.state.password
             })

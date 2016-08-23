@@ -35,6 +35,15 @@ jobSchema.plugin(mongoosePaginate);
 
 var Job = mongoose.model('Job', jobSchema);
 
+var applicationSchema = mongoose.Schema({
+    _id: {type: String, required: true, unique: true},
+    username: String,
+    jobKey: String,
+    status: String
+});
+
+var Application = mongoose.model('Application', applicationSchema);
+
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
@@ -55,8 +64,8 @@ app.post('/register', function(req, res) {
     });
 });
 
-app.post('/login', function(req, res) {
-    User.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
+app.get('/login', function(req, res) {
+    User.findOne({ username: req.query.username, password: req.query.password }, function (err, user) {
         if (user) {
             res.json(user);
         } else {
@@ -119,6 +128,32 @@ app.get('/jobs', function(req, res) {
     });
 });
 
+app.get('/application', function(req, res) {
+    Application.findOne({ _id: req.query._id }, function(err, application) {
+        if (application) {
+            res.json({
+                application: application
+            });
+        }
+        res.end();
+    });
+});
+
+app.post('/application', function(req, res) {
+    var application = new Application({
+        _id: req.body._id,
+        username: req.body.username,
+        jobKey: req.body.jobKey,
+        status: req.body.status
+    });
+    application.save(function(err) {
+        if (err) {
+            res.status(400);
+        }
+        res.end();
+    });
+});
+
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/build/index.html');
 });
@@ -131,10 +166,10 @@ app.listen(3000, 'localhost', function (err) {
     console.log('Listening at http://localhost:3000');
 });
 
-app.listen(3000, '192.168.1.10', function (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log('Listening at http://192.168.1.10:3000');
-});
+// app.listen(3000, '192.168.1.10', function (err) {
+//     if (err) {
+//         console.log(err);
+//         return;
+//     }
+//     console.log('Listening at http://192.168.1.10:3000');
+// });
