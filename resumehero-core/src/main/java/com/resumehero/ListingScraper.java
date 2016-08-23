@@ -28,7 +28,7 @@ public class ListingScraper {
             String initialUrl = String.format(INDEED_URL, search.getQuery(), search.getLocation(), search.getJobtype(), 0, LIMIT);
             Document firstPage = Jsoup.connect(initialUrl).get();
             int totalResults = parser.totalResults(firstPage);
-            int pages = Math.min(totalResults / LIMIT, (1000 + LIMIT) / LIMIT);
+            int pages = (int) Math.min(Math.ceil((double)totalResults / LIMIT), Math.ceil((double)(1000 + LIMIT) / LIMIT));
             for (int i = 0; i < pages; i++) {
                 Document doc;
                 if (i == 0) {
