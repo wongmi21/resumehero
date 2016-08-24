@@ -12,8 +12,8 @@ public class Processes {
     @Autowired
     private ListingScraper listingScraper;
 
-    @Scheduled(cron = "0 0 * * * *")
-//    @Scheduled(fixedRate = 3600000)
+//    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(fixedRate = 3600000)
     public void indeed() throws Exception {
         listingScraper.invoke();
     }
