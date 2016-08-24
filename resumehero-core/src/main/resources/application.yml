@@ -6,6 +6,9 @@ spring:
       database: resumehero
 indeed-listing-scraper:
   searches:
+  - query: eb21
+    location:
+    jobtype:
   - query: java
     location:
     jobtype: fulltime
@@ -22,5 +25,8 @@ indeed-listing-scraper:
     location:
     jobtype: fulltime
   - query: lawyer
+    location:
+    jobtype: fulltime
+  - query: actuary
     location:
     jobtype: fulltime

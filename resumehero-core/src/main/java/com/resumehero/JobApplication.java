@@ -1,23 +1,36 @@
 package com.resumehero;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "applications")
 public class JobApplication {
 
     @Id
-    private String id;
+    private ObjectId objectId;
+
+    @Indexed(unique = true)
+    private String key;
     private String username;
     private String jobKey;
     private String status;
 
-    public String getId() {
-        return id;
+    public ObjectId getObjectId() {
+        return objectId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setObjectId(ObjectId objectId) {
+        this.objectId = objectId;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getUsername() {

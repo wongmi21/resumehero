@@ -5,13 +5,13 @@ var config = require('./webpack.config');
 var compiler = webpack(config);
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var upload = multer({ dest: '/Users/michael/projects/resumehero/resumes' });
 var mongoosePaginate = require('mongoose-paginate');
 
 mongoose.connect('mongodb://localhost:27017/resumehero');
 
 var userSchema = mongoose.Schema({
-    username: {type: String, required: true, unique: true},
+    username: {type: String, required: true, index: { unique: true }},
     password: {type: String, required: true},
     name: String,
     email: String,
@@ -19,12 +19,10 @@ var userSchema = mongoose.Schema({
     resume: {},
     coverletter: String
 });
-
 var User = mongoose.model('User', userSchema);
 
 var jobSchema = mongoose.Schema({
-    _id: {type: String, required: true, unique: true},
-    _class: String,
+    _id: {type: String, required: true, index: { unique: true }},
     title: String,
     company: String,
     location: String,
@@ -32,11 +30,10 @@ var jobSchema = mongoose.Schema({
     indeedApply: Boolean
 });
 jobSchema.plugin(mongoosePaginate);
-
 var Job = mongoose.model('Job', jobSchema);
 
 var applicationSchema = mongoose.Schema({
-    _id: {type: String, required: true, unique: true},
+    key: {type: String, required: true, index: { unique: true }},
     username: String,
     jobKey: String,
     status: String
@@ -129,7 +126,7 @@ app.get('/jobs', function(req, res) {
 });
 
 app.get('/application', function(req, res) {
-    Application.findOne({ _id: req.query._id }, function(err, application) {
+    Application.findOne({ key: req.query.key }, function(err, application) {
         if (application) {
             res.json({
                 application: application
@@ -141,7 +138,7 @@ app.get('/application', function(req, res) {
 
 app.post('/application', function(req, res) {
     var application = new Application({
-        _id: req.body._id,
+        key: req.body.key,
         username: req.body.username,
         jobKey: req.body.jobKey,
         status: req.body.status

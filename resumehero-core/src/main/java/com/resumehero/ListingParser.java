@@ -28,7 +28,15 @@ public class ListingParser {
             String location = result.getElementsByClass("location").text();
             String snippet = result.getElementsByClass("summary").text();
             boolean indeedApply = StringUtils.containsIgnoreCase(result.getElementsByClass("iaLabel").text(), "apply");
-            listings.add(new Job(key, title, url, company, location, snippet, indeedApply, null, null));
+            Job job = new Job();
+            job.setKey(key);
+            job.setTitle(title);
+            job.setUrl(url);
+            job.setCompany(company);
+            job.setLocation(location);
+            job.setSnippet(snippet);
+            job.setIndeedApply(indeedApply);
+            listings.add(job);
         }
 
         return listings;

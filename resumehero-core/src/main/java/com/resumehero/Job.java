@@ -15,24 +15,6 @@ public class Job {
     private String snippet;
     private boolean indeedApply;
 
-    private String summary;
-    private String applyUrl;
-
-    public Job() {
-    }
-
-    public Job(String key, String title, String url, String company, String location, String snippet, boolean indeedApply, String summary, String applyUrl) {
-        this.key = key;
-        this.title = title;
-        this.url = url;
-        this.company = company;
-        this.location = location;
-        this.snippet = snippet;
-        this.indeedApply = indeedApply;
-        this.summary = summary;
-        this.applyUrl = applyUrl;
-    }
-
     public String getKey() {
         return key;
     }
@@ -87,21 +69,5 @@ public class Job {
 
     public void setIndeedApply(boolean indeedApply) {
         this.indeedApply = indeedApply;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getApplyUrl() {
-        return applyUrl;
-    }
-
-    public void setApplyUrl(String applyUrl) {
-        this.applyUrl = applyUrl;
     }
 }

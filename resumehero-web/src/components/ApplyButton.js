@@ -13,16 +13,31 @@ export default class ApplyButton extends React.Component {
     }
 
     handleApply() {
-        this.setState({ status: "applied" }, function () {
+        this.setState({ status: "applying" }, function () {
             request
                 .post('/application')
                 .send({
-                    _id: this.context.user.username + this.props.jobKey,
+                    key: this.context.user.username + this.props.jobKey,
                     username: this.context.user.username,
                     jobKey: this.props.jobKey,
                     status: this.state.status
                 })
-                .end();
+                .end(function() {
+                    request
+                        .get('http://localhost:8080/apply')
+                        .query({
+                            key: this.context.user.username + this.props.jobKey
+                        })
+                        .end(function (err, res) {
+                            if (err) {
+                                this.setState({ status: "" });
+                            } else if (res.ok) {
+                                this.setState({ status: "applied" });
+                            } else {
+                                this.setState({ status: "" });
+                            }
+                        }.bind(this));
+                }.bind(this));
         });
     }
 
@@ -30,7 +45,7 @@ export default class ApplyButton extends React.Component {
         if (this.state.jobKey !== this.props.jobKey) {
             request
                 .get('/application')
-                .query({_id: this.context.user.username + this.props.jobKey})
+                .query({ key: this.context.user.username + this.props.jobKey })
                 .end(function (err, res) {
                     if (res.ok) {
                         if (res.body) {
@@ -55,8 +70,10 @@ export default class ApplyButton extends React.Component {
         switch(this.state.status) {
             case "":
                 return <Button onClick={this.handleApply.bind(this)}>Apply</Button>;
+            case "applying":
+                return <Button disabled bsStyle="primary">Applying...</Button>;
             case "applied":
-                return <Button disabled bsStyle="primary">Applied</Button>;
+                return <Button disabled bsStyle="success">Applied</Button>;
         }
     }
 }
