@@ -24,7 +24,7 @@ export default class ApplyButton extends React.Component {
                 })
                 .end(function() {
                     request
-                        .get('http://localhost:8080/apply')
+                        .get('http://192.168.1.4:8080/apply')
                         .query({
                             key: this.context.user.username + this.props.jobKey
                         })

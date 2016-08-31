@@ -12,9 +12,9 @@ public class ApplyController {
     @Autowired
     private ApplyService applyService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://192.168.1.4:3000")
     @RequestMapping("/apply")
     public JobApplication apply(@RequestParam(value = "key") String key) {
-        return applyService.apply(key);
+         return applyService.apply(key);
     }
 }
