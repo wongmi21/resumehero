@@ -61,8 +61,8 @@ app.post('/register', function(req, res) {
     });
 });
 
-app.get('/login', function(req, res) {
-    User.findOne({ username: req.query.username, password: req.query.password }, function (err, user) {
+app.post('/login', function(req, res) {
+    User.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
         if (user) {
             res.json(user);
         } else {

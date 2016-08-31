@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import AlertPopup from '../components/AlertPopup';
 import request from 'superagent';
 
 export default class RegisterPage extends React.Component {
@@ -8,7 +9,9 @@ export default class RegisterPage extends React.Component {
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            registrationFailed: false,
+            registrationComplete: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -33,9 +36,15 @@ export default class RegisterPage extends React.Component {
             })
             .end(function (err, res) {
                 if (res.ok) {
-                    alert('Registration complete');
+                    this.setState({
+                        registrationFailed: false,
+                        registrationComplete: true
+                    });
                 } else {
-                    alert('Registration failed');
+                    this.setState({
+                        registrationFailed: true,
+                        registrationComplete: false
+                    });
                 }
             }.bind(this));
     }
@@ -70,6 +79,8 @@ export default class RegisterPage extends React.Component {
                     </FormGroup>
                     <FormGroup>
                         <Col md={4} mdOffset={4}>
+                            <AlertPopup visible={this.state.registrationFailed} bsStyle="danger">Registration failed. Account already exists.</AlertPopup>
+                            <AlertPopup visible={this.state.registrationComplete} bsStyle="success">Registration complete</AlertPopup>
                             <Button bsStyle="primary" type="submit">
                                 Register
                             </Button>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import AlertPopup from '../components/AlertPopup';
 import request from 'superagent';
+import { browserHistory } from 'react-router';
 
 export default class LoginPage extends React.Component {
 
@@ -8,7 +10,8 @@ export default class LoginPage extends React.Component {
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            loginFailed: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,17 +29,19 @@ export default class LoginPage extends React.Component {
         e.preventDefault();
 
         request
-            .get('/login')
-            .query({
+            .post('/login')
+            .send({
                 username: this.state.username,
                 password: this.state.password
             })
             .end(function (err, res) {
                 if (res.ok) {
                     this.context.changeUser(res.body);
-                    alert('Login complete');
+                    browserHistory.push('/profile');
                 } else {
-                    alert('Login failed');
+                    this.setState({
+                        loginFailed: true
+                    });
                 }
             }.bind(this));
     }
@@ -71,6 +76,7 @@ export default class LoginPage extends React.Component {
                     </FormGroup>
                     <FormGroup>
                         <Col md={4} mdOffset={4}>
+                            <AlertPopup visible={this.state.loginFailed} bsStyle="danger">Login failed</AlertPopup>
                             <Button bsStyle="primary" type="submit">
                                 Log In
                             </Button>
